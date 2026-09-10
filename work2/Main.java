@@ -102,6 +102,8 @@ public class Main {
 
         String str = "one two two three four four five six seven";
 
+        /*
+        ALL WORDS
         System.out.println(String.format("Finding words with max length in line '%s': ", str));
         List<String> strListReesult = Arrays.stream(str.split("\\s+"))
                 .distinct()
@@ -115,6 +117,15 @@ public class Main {
                 .orElse(Collections.emptyList());
         System.out.println("-----------------------------------------------------");
         System.out.println("result: "  + (strListReesult.isEmpty() ? "no words" : strListReesult.toString()));
+        System.out.println();*/
+
+        //ANY WORD
+        System.out.println(String.format("Finding any words with max length in line '%s': ", str));
+        Optional<String> strResult = Arrays.stream(str.split("\\s+"))
+                .distinct()
+                .max(Comparator.comparingInt(String::length));
+        System.out.println("-----------------------------------------------------");
+        System.out.println("result: "  + (strResult.isPresent() ? strResult.get() : "no words"));
         System.out.println();
 
         System.out.println(String.format("Creating hashMap for line '%s': ", str));
@@ -133,7 +144,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Finding any word with max length in lines (exclude <> 5 words):");
-        Optional<String> strResult = Arrays.stream(strAr)
+        strResult = Arrays.stream(strAr)
                 .peek(System.out::println)
                 .filter(line ->  line.trim().split("\\s+").length == 5)
                 .flatMap(line -> Arrays.stream(line.split(" ")))
